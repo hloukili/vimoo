@@ -7,7 +7,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
-import org.springframework.security.config.annotation.authentication.configurers.userdetails.DaoAuthenticationConfigurer;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -75,6 +74,8 @@ public class SecurityConfig {
 						.requestMatchers("/actuator/health").permitAll()
 						.requestMatchers("/swagger-ui/**", "/v1/api-docs/**").permitAll()
 						.requestMatchers("/error").permitAll()
+
+						.requestMatchers("/api/auth/refresh").permitAll()
 
 						// URLs protégées (authentification requise)
 						.requestMatchers("/api/v1/users/me/**").authenticated()
