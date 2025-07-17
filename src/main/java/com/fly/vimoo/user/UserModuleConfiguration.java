@@ -37,8 +37,9 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 		"com.fly.vimoo.user.domain.entity"  // JPA Entities (User, UserSession, etc.)
 })
 @EnableJpaRepositories(basePackages = {
-		"com.fly.vimoo.user.infrastructure.repository"  // JPA Entities (User, UserSession, etc.)
-})
+		"com.fly.vimoo.user.infrastructure.repository" // JPA Entities (User, UserSession, etc.)
+}
+)
 @Slf4j
 public class UserModuleConfiguration {
 

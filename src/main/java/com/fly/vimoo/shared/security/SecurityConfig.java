@@ -85,7 +85,7 @@ public class SecurityConfig {
 
 						.requestMatchers("/api/v1/admin/**").hasRole("ADMIN")
 
-						.anyRequest().authenticated())
+						.anyRequest().permitAll())
 
 				//6. Add JWT filter before UsernamePasswordAuthenticationFilter standard
 				.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
