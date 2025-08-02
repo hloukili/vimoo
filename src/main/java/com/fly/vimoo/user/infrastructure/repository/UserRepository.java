@@ -175,7 +175,6 @@ public interface UserRepository extends JpaRepository<User, UUID> {
 	 *
 	 * @return Number of verified users
 	 */
-
 	@Query("SELECT COUNT(u) FROM User u WHERE u.emailVerified = true")
 	long countVerifiedUsers();
 
@@ -200,7 +199,6 @@ public interface UserRepository extends JpaRepository<User, UUID> {
 	 * @param lastLogin Date last connexion
 	 * @return Number of rows updated
 	 */
-
 	@Modifying
 	@Query("UPDATE User u SET u.lastLogin = :lastLogin WHERE u.id = :userId")
 	int updateLastLogin(@Param("userId") UUID userId, @Param("lastLogin") LocalDateTime lastLogin);
@@ -212,7 +210,6 @@ public interface UserRepository extends JpaRepository<User, UUID> {
 	 * @param userId ID user
 	 * @return Number of rows updated
 	 */
-
 	@Modifying
 	@Query("UPDATE User u SET u.emailVerified = true, " +
 			"u.emailVerificationToken = null, " +
@@ -228,7 +225,6 @@ public interface UserRepository extends JpaRepository<User, UUID> {
 	 * @param now Date/time actual
 	 * @return Number of tokens cleaned
 	 */
-
 	@Modifying
 	@Query("UPDATE User u SET u.emailVerificationToken = null, u.emailVerificationExpires = null " +
 			"WHERE u.emailVerificationExpires < :now")
@@ -242,7 +238,6 @@ public interface UserRepository extends JpaRepository<User, UUID> {
 	 * @param now Date/time actual
 	 * @return Number of tokens cleaned
 	 */
-
 	@Modifying
 	@Query("UPDATE User u SET u.passwordResetToken = null, u.passwordResetExpires = null " +
 			"WHERE u.passwordResetExpires < :now")
@@ -251,5 +246,28 @@ public interface UserRepository extends JpaRepository<User, UUID> {
 
 
 	// === SPECIAL REQUEST ===
+	/**
+	 * Find recent users
+	 *
+	 * @param daysAgo Number of days in past
+	 * @param pageable Paramètres de pagination
+	 * @return Page des nouveaux utilisateurs
+	 * */
+	@Query("SELECT u FROM User u WHERE u.createdAt > :daysAgo"
+			+ " AND u.isActive = true ORDER BY u.createdAt DESC")
+	Page<User> findRecentUsers(@Param("daysAgo") LocalDateTime daysAgo, Pageable pageable);
+
+
+	/**
+	 * Find users who never logged in
+	 *
+	 * @param pageable Paramètres de pagination
+	 * @return Page des utilisateurs jamais connectés
+	 */
+	@Query("SELECT u FROM User u WHERE u.lastLogin IS NULL AND u.emailVerified = true")
+	Page<User> findUsersNeverLoggedIn(Pageable pageable);
+
+
+
 
 }

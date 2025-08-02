@@ -56,7 +56,7 @@ public class User implements UserDetails {
 	 **/
 	@Column(name = "password_hash", nullable = false, length = 255)
 	@NotBlank(message = "Mot de passe requis")
-	private String passwordHash;
+	private String password;
 
 	@Column(name = "first_name", length = 100)
 	@Size(max = 100, message = "Prénom maximum 100 caractères")
@@ -160,12 +160,12 @@ public class User implements UserDetails {
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return List.of(new SimpleGrantedAuthority("ROLE_ " + role.name()));
+		return List.of(new SimpleGrantedAuthority("ROLE_" + role.name()));
 	}
 
 	@Override
 	public String getPassword() {
-		return passwordHash;
+		return password;
 	}
 
 	@Override
