@@ -136,7 +136,9 @@ public interface UserRepository extends JpaRepository<User, UUID> {
 
 
 	//TODO : make query
+/*
 	Page<User> globalSearch(@Param("searchTerm") String searchTerm, Pageable pageable);
+*/
 
 	// ====ROLE GESTION===
 

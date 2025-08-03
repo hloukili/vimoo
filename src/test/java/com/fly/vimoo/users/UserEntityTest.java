@@ -136,4 +136,8 @@ public class UserEntityTest {
 		assertThat(user.getEmailVerificationToken()).isNull();
 		assertThat(user.getEmailVerificationExpires()).isNull();
 	}
+
+	//TODO: check other unit test
+
+
 }

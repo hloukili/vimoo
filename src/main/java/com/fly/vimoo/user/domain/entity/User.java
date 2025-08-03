@@ -168,6 +168,12 @@ public class User implements UserDetails {
 		return password;
 	}
 
+
+	public String getUsername_() {
+		return username;
+	}
+
+
 	@Override
 	public String getUsername() {
 		return email;
