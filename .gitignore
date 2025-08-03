@@ -53,3 +53,6 @@ uploads/
 mvnw
 mvnw.cmd
 /.mvn/
+
+##Application development
+!**/src/main/**/resources/application-dev.yaml

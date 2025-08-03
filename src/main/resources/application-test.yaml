@@ -1,0 +1,83 @@
+# Configuration spécifique pour les tests
+spring:
+  datasource:
+    url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    driver-class-name: org.h2.Driver
+    username: test
+    password: test
+
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    database-platform: org.hibernate.dialect.H2Dialect
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
+        generate_statistics: false
+
+  # Désactiver Liquibase pour les tests (on utilise ddl-auto)
+  liquibase:
+    enabled: false
+
+  # Configuration email pour tests
+  mail:
+    host: localhost
+    port: 3025
+    username: test
+    password: test
+    properties:
+      mail:
+        smtp:
+          auth: false
+          starttls:
+            enable: false
+
+# Configuration application pour tests
+security:
+  jwt:
+    secret: testSecretKeyForTestingPurposesOnly123456789012345678901234567890
+    access-token-expiration: 3600000    # 1 heure pour tests
+    refresh-token-expiration: 86400000  # 1 jour pour tests
+
+  cors:
+    allowed-origins: http://localhost:3000
+
+  email:
+    from: test@watchlist.com
+    verification:
+      expiration: 86400000  # 24 heures
+      url: http://localhost:3000/verify-email
+    reset:
+      expiration: 3600000   # 1 heure
+      url: http://localhost:3000/reset-password
+
+  file:
+    upload-dir: ./test-uploads
+    max-size: 5242880
+
+# Logging pour tests
+logging:
+  level:
+    com.watchlist: DEBUG
+    org.springframework.security: WARN
+    org.hibernate.SQL: WARN
+    org.hibernate.type.descriptor.sql.BasicBinder: WARN
+    org.springframework.test: INFO
+  pattern:
+    console: "%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"
+
+# Désactiver les endpoints de management en tests
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
+  endpoint:
+    health:
+      show-details: never
+  health:
+    mail:
+      enabled: false
+
+
