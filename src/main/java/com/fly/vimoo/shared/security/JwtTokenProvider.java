@@ -79,6 +79,15 @@ public class JwtTokenProvider {
 
 	}
 
+	/**
+	 * Génère un refresh token depuis une authentification
+	 * Utilisé lors du login et register.
+	 */
+	public String generateRefreshToken(Authentication authentication) {
+		UserDetails userPrincipal = (UserDetails) authentication.getPrincipal();
+		return generateToken(userPrincipal.getUsername(), Long.parseLong(refreshTokenExpiration), "refresh");
+	}
+
 
 	/**
 	 * Méthode privée pour générer un token
